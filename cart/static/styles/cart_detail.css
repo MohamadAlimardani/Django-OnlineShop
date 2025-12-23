@@ -1,0 +1,158 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.cart-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 70px;
+  border: solid blue;
+}
+
+.products-details {
+  border-radius: .5rem;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 80px;
+  height: 80px;
+  border-radius: .4rem;
+  transition: all .3s ease-in-out;
+}
+
+.product-image:hover {
+  opacity: .75;
+  transform: translateY(-1px);
+}
+
+.product-quantity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.product-quantity p {
+  padding: 8px 12px;
+  border: solid 1px gray;
+  border-radius: .4rem;
+}
+
+.product-quantity button {
+  padding: 8px 12px;
+  border-radius: .4rem;
+  border: none;
+  background-color: #bc6c25;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all .3s ease-in-out;
+}
+
+.product-quantity button:hover {
+  opacity: .6;
+  transform: translateY(-1px);
+}
+
+.product-quantity button:active {
+  transform: scale(.98);
+}
+
+.product-quantity button:disabled {
+  opacity: .5;
+  transform: translateY(0);
+}
+
+.clear-cart button {
+  background-color: #283618;
+  border: none;
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+}
+
+.clear-cart button:hover {
+  opacity: .6;
+  transform: translateY(-1px);
+}
+
+.clear-cart button:active {
+  transform: scale(.92);
+}
+
+.tg {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.tg td {
+  border: none;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+  padding: 10px 30px;
+  word-break: normal;
+}
+
+.tg th {
+  background-color: #bc6c25;
+  border-style: none;
+  color: #283618;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 30px;
+  overflow: hidden;
+  word-break: normal;
+}
+
+.tg .tg-cly1 {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tg .tg-a4wa {
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tg .tg-0lax {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.cart-totals-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  gap: 50px;
+  background-color: #bc6c25;
+  color: #283618;
+  border-radius: .5rem;
+  padding: 20px 50px;
+}
+
+.prices {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.prices span {
+  margin: 12px;
+}
+
+.subtotal-price-number {
+  color: gray;
+}
+
+.total-price-number {
+  color: gray;
+}

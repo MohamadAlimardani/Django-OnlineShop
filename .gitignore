@@ -1,0 +1,62 @@
+# ===============================
+# Python / Django
+# ===============================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+*.log
+local_settings.py
+
+# Database (usually ignored)
+db.sqlite3
+db.sqlite3-journal
+
+# ===============================
+# Virtual Environments
+# ===============================
+
+venv/
+.venv/
+env/
+ENV/
+
+# ===============================
+# Environment variables
+# ===============================
+
+.env
+.env.*
+*.env
+
+# ===============================
+# Static & Media
+# ===============================
+
+# Collected static files (generated)
+staticfiles/
+
+# User uploads
+media/
+
+# DO NOT ignore:
+# static/
+# static/styles/
+# static/css/
+# These SHOULD be committed
+
+# ===============================
+# IDE / OS
+# ===============================
+
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ===============================
+# Node (only if used)
+# ===============================
+
+node_modules/
