@@ -1,0 +1,118 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 35px;
+  border-bottom: 2px solid #fefeff;
+  border-radius: 0 0 10px 10px;
+  background-color: #606C38;
+}
+
+.left-section {
+  /* border: solid greenyellow; */
+  display: flex;
+  align-items: center;
+  width: 115px;
+  margin-right: 15px;
+}
+
+.middle-section {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+  /* border: solid blue; */
+  margin: 0 20px;
+}
+
+.right-section {
+  /* border: solid blue; */
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+.logo a {
+  font-size: 40px;
+  font-weight: bold;
+  font-family: pacifico;
+  line-height: 35px;
+  text-decoration: none;
+  color: white;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  align-items: center;
+  max-width: 500px;
+}
+
+.search-bar input {
+  flex: 1;
+  background-color: #283618;
+  border: none;
+  padding: 20px 0 19px 30px;
+  border-radius: 5px 0 0 5px;
+  font-size: 16px;
+  color: rgb(201, 129, 52);
+  letter-spacing: 3px;
+}
+
+.search-bar input:focus {
+  outline: none;
+}
+
+.search-bar button {
+  margin-left: -1px;
+  background-color: #283618;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  padding: 9px;
+  cursor: pointer;
+  color: white;
+}
+
+.search-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.products a,
+.login a,
+.sign-up a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-family: "Courier Prime";
+  /* font-weight: bold; */
+}
+
+.cart a {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.cart svg {
+  width: 30px;
+  height: 30px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.welcome-username {
+  color: white;
+}
+
+.profile-icon {
+  cursor: pointer;
+}
+

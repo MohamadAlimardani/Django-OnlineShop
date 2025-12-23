@@ -1,0 +1,20 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #606C38;
+  height: 100px;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  background-color: #606C38;
+  height: 100px;
+  margin-top: auto;
+}

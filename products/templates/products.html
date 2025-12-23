@@ -1,0 +1,44 @@
+{% extends "base/index.html" %}
+
+{% load static %} 
+{% block content %}
+
+<div class="card-container">
+  {% for product in products %}
+  <div class="card">
+    <div class="card-content">
+      <div class="image-container">
+        <img
+          id="main-image"
+          src="{{ product.image.url }}"
+          alt="{{ product.name }}"
+        />
+      </div>
+      <div class="details-container">
+        <a class="product-name-link" href="{% url 'product_details' product.slug %}">
+          <h2 id="name" class="details">
+            {{ product.name }}
+          </h2>
+        </a>
+        <p id="description" class="details">{{ product.description }}</p>
+        <div id="price-stock" class="details">
+          <p id="price" class="details">${{ product.price }}</p>
+          <p id="in-stock" class="details">{{ product.stock }} in stock</p>
+        </div>
+      </div>
+      {% if product.stock > 0 %}
+      <form action="{% url 'cart_add' product.id %}" method="POST">
+        {% csrf_token %}
+        <div class="button-container">
+          <button>Add to cart</button>
+        </div>
+      </form>
+      {% else %}
+        <p>Out of stock.</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

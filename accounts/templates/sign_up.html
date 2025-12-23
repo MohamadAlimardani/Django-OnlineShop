@@ -1,0 +1,86 @@
+{% extends 'base_auth.html' %} {% load static %} {% block content %}
+<div class="content-wrapper">
+  <div class="welcome-wrapper">
+    <div
+      class="welcome-title" id="signup-welcome-title">
+      <h3>
+        <span class="welcome-span">Welcome to</span>
+        <span class="logo-span">OliveGarden</span>
+      </h3>
+    </div>
+  </div>
+  <div class="form-container">
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-wrapper">
+        <div class="title">
+          <h1>Sign Up</h1>
+          <p>Please enter your details to sign up</p>
+        </div>
+        <div class="input-wrapper">
+          {% if form.non_field_errors %}
+            <div class="field-errors non-field-errors">
+              {{ form.non_field_errors }}
+            </div>
+          {% endif %}
+          <div class="fname-lname">
+            <div class="first-name-container">
+              {{ form.first_name }}
+              {% if form.first_name.errors %}
+                <div class="field-errors">
+                  {{ form.first_name.errors }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="last-name-container">
+              {{ form.last_name }}
+              {% if form.last_name.errors %}
+                <div class="field-errors">
+                  {{ form.last_name.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          {{ form.username }}
+          {% if form.username.errors %}
+            <div class="field-errors">
+              {{ form.username.errors }}
+            </div>
+          {% endif %}
+          
+          {{ form.email }}
+          {% if form.email.errors %}
+            <div class="field-errors">
+              {{ form.email.errors }}
+            </div>
+          {% endif %}
+          
+          {{ form.password }}
+          {% if form.password.errors %}
+            <div class="field-errors">
+              {{ form.password.errors }}
+            </div>
+          {% endif %}
+          
+          {{ form.confirm_password }}
+          {% if form.confirm_password.errors %}
+            <div class="field-errors">
+              {{ form.confirm_password.errors }}
+            </div>
+          {% endif %}
+
+          
+        </div>
+        <div class="btn-wrapper">
+          <button type="submit">Register</button>
+        </div>
+        <div class="no-account">
+          <p>Already have an account?
+            <a href="{% url 'sign_in' %}"> Sign in </a>here.
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
