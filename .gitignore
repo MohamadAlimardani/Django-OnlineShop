@@ -42,7 +42,7 @@ media/
 
 # DO NOT ignore:
 # static/
-# static/styles/
+static/images/
 # static/css/
 # These SHOULD be committed
 
