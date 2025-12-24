@@ -1,0 +1,122 @@
+<section class="home-hero">
+  <div class="home-hero__content">
+    <span class="home-hero__eyebrow">Olive Garden Pots</span>
+    <h1>Warm, sculpted pots for modern plant styling.</h1>
+    <p>
+      Curated finishes, balanced shapes, and a palette that lets greenery feel
+      calm and intentional.
+    </p>
+    <div class="home-hero__actions">
+      <a class="btn btn--primary" href="{% url 'products' %}">Shop pots</a>
+      <a class="btn btn--ghost" href="{% url 'products' %}">Browse collections</a>
+    </div>
+  </div>
+</section>
+
+<section class="home-section home-categories">
+  <div class="home-section__header">
+    <h2>Browse categories</h2>
+    <p>Find a pot for every plant corner and patio mood.</p>
+  </div>
+  <div class="home-categories__grid">
+    <div class="category-card category-card--warm">
+      <h3>Indoor pots</h3>
+      <p>Soft matte finishes and compact profiles.</p>
+      <button class="category-card__cta" type="button">Browse category</button>
+    </div>
+    <div class="category-card category-card--glow">
+      <h3>Outdoor planters</h3>
+      <p>Weather-ready shapes built for patios.</p>
+      <button class="category-card__cta" type="button">Browse category</button>
+    </div>
+    <div class="category-card category-card--sage">
+      <h3>Hanging sets</h3>
+      <p>Airy, balanced silhouettes for vertical greenery.</p>
+      <button class="category-card__cta" type="button">Browse category</button>
+    </div>
+    <div class="category-card category-card--sand">
+      <h3>Self-watering</h3>
+      <p>Low effort care with clean, minimal lines.</p>
+      <button class="category-card__cta" type="button">Browse category</button>
+    </div>
+  </div>
+</section>
+
+<section class="home-section home-featured">
+  <div class="home-section__header">
+    <h2>Featured pots</h2>
+    <p>Fresh picks styled for easy, elevated spaces.</p>
+  </div>
+  <div class="home-featured__grid">
+    {% for product in featured_products %}
+    <article class="featured-card">
+      <div class="featured-card__media">
+        {% if product.image %}
+        <img
+          class="featured-card__img"
+          src="{{ product.image.url }}"
+          alt="{{ product.name }}"
+        />
+        {% else %}
+        <div class="featured-card__fallback"></div>
+        {% endif %}
+      </div>
+      <div class="featured-card__body">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <span class="featured-card__price">${{ product.price }}</span>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  <div class="home-featured__actions">
+    <a class="btn btn--primary" href="{% url 'products' %}">View all products</a>
+  </div>
+</section>
+
+<section class="home-section home-benefits">
+  <div class="home-section__header">
+    <h2>Why shop with us</h2>
+    <p>Simple service, reliable quality, and careful delivery.</p>
+  </div>
+  <div class="home-benefits__grid">
+    <div class="benefit-card">
+      <div class="benefit-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <h3>Quality materials</h3>
+      <p>Durable finishes that stay beautiful indoors or out.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M3.375 4.5C2.339 4.5 1.5 5.34 1.5 6.375V13.5h12V6.375c0-1.036-.84-1.875-1.875-1.875h-8.25ZM13.5 15h-12v2.625c0 1.035.84 1.875 1.875 1.875h.375a3 3 0 1 1 6 0h3a.75.75 0 0 0 .75-.75V15Z" />
+          <path d="M8.25 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0ZM15.75 6.75a.75.75 0 0 0-.75.75v11.25c0 .087.015.17.042.248a3 3 0 0 1 5.958.464c.853-.175 1.522-.935 1.464-1.883a18.659 18.659 0 0 0-3.732-10.104 1.837 1.837 0 0 0-1.47-.725H15.75Z" />
+          <path d="M19.5 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+        </svg>
+      </div>
+      <h3>Fast shipping</h3>
+      <p>Carefully packed and delivered to your door.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <h3>Curated styles</h3>
+      <p>Modern silhouettes that work with any plant.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M4.848 2.771A49.144 49.144 0 0 1 12 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 0 1-3.476.383.39.39 0 0 0-.297.17l-2.755 4.133a.75.75 0 0 1-1.248 0l-2.755-4.133a.39.39 0 0 0-.297-.17 48.9 48.9 0 0 1-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97ZM6.75 8.25a.75.75 0 0 1 .75-.75h9a.75.75 0 0 1 0 1.5h-9a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5H12a.75.75 0 0 0 0-1.5H7.5Z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <h3>Helpful support</h3>
+      <p>Quick answers from a team that loves greenery.</p>
+    </div>
+  </div>
+</section>

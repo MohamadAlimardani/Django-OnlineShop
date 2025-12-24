@@ -1,110 +1,121 @@
 {% extends "base/index.html" %} {% block content %} {% load static %}
 
-<div class="cart-wrapper">
-  <div class="products-details">
-    <table class="tg">
-      <thead>
-        <tr>
-          <th class="tg-a4wa"></th>
-          <th class="tg-cly1">Product</th>
-          <th class="tg-cly1">Price</th>
-          <th class="tg-cly1">Quantity</th>
-          <th class="tg-cly1">Subtotal</th>
-          <th class="tg-cly1"></th>
-        </tr>
-      </thead>
-      {% for item in cart %}
-      <tbody>
-        <tr>
-          <td class="tg-0lax">
-            <img
-              class="product-image"
-              src="{{ item.product.image.url }}"
-              alt="{{ item.product.name }}"
-            />
-          </td>
-          <td class="tg-0lax">
-            <h3>{{ item.product.name }}</h3>
-          </td>
-          <td class="tg-0lax" id="">&#36;{{ item.price }}</td>
-          <td class="tg-0lax">
-            <form
-              action="{% url 'cart_update' item.product.id %}"
-              method="POST"
-            >
-              {% csrf_token %}
-              <div class="product-quantity">
-                <button
-                  type="submit"
-                  name="action"
-                  value="decrease"
-                  {% if item.quantity <= 1 %}disabled{%endif%}
-                >
-                  &#8722;</button>
-                <p>{{ item.quantity }}</p>
-                <button
-                  type="submit"
-                  name="action"
-                  value="increase"
-                  {% if item.quantity >= item.product.stock %}disabled{% endif %}
-                > 
-                  &#43;</button>
-              </div>
-            </form>
-          </td>
-          <td class="tg-0lax">&#36;{{ item.total_price }}</td>
-          <td class="tg-0lax">
-            <form action="{% url 'cart_remove' item.product.id %}" method="POST">
-              {% csrf_token %}
-              <div class="clear-cart">
-                <button type="submit" name="action" value="delete">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="35"
-                    height="35"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#ffffffff"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+<section class="cart-page">
+  <div class="cart-header">
+    <div>
+      <h1>Your cart</h1>
+      <p>Review your pots before checkout.</p>
+    </div>
+  </div>
+
+  <div class="cart-wrapper">
+    <div class="products-details">
+      <table class="tg cart-table">
+        <thead>
+          <tr>
+            <th class="tg-a4wa"></th>
+            <th class="tg-cly1">Product</th>
+            <th class="tg-cly1">Price</th>
+            <th class="tg-cly1">Quantity</th>
+            <th class="tg-cly1">Subtotal</th>
+            <th class="tg-cly1"></th>
+          </tr>
+        </thead>
+        {% for item in cart %}
+        <tbody>
+          <tr>
+            <td class="tg-0lax">
+              <img
+                class="product-image"
+                src="{{ item.product.image.url }}"
+                alt="{{ item.product.name }}"
+              />
+            </td>
+            <td class="tg-0lax">
+              <h3>{{ item.product.name }}</h3>
+            </td>
+            <td class="tg-0lax">&#36;{{ item.price }}</td>
+            <td class="tg-0lax">
+              <form
+                action="{% url 'cart_update' item.product.id %}"
+                method="POST"
+              >
+                {% csrf_token %}
+                <div class="product-quantity">
+                  <button
+                    type="submit"
+                    name="action"
+                    value="decrease"
+                    {% if item.quantity <= 1 %}disabled{%endif%}
                   >
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path
-                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                    ></path>
-                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                  </svg>
-              </div>
-              </button>
-            </form>
-          </td>
-        </tr>
-      </tbody>
-      {% endfor %}
-    </table>
-  </div>
-  <div class="cart-totals-container">
-    <h1>Cart Totals</h1>
-    {% if cart %}
-      <div class="prices">
-        <div class="subtotal">
-          <p>
-            <span>Subtotal</span>
-            <span class="subtotal-price-number">{{ cart.get_total_price }}</span>
-          </p>
+                    &#8722;</button>
+                  <p>{{ item.quantity }}</p>
+                  <button
+                    type="submit"
+                    name="action"
+                    value="increase"
+                    {% if item.quantity >= item.product.stock %}disabled{% endif %}
+                  >
+                    &#43;</button>
+                </div>
+              </form>
+            </td>
+            <td class="tg-0lax">&#36;{{ item.total_price }}</td>
+            <td class="tg-0lax">
+              <form action="{% url 'cart_remove' item.product.id %}" method="POST">
+                {% csrf_token %}
+                <div class="clear-cart">
+                  <button type="submit" name="action" value="delete">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path
+                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                      ></path>
+                      <line x1="10" y1="11" x2="10" y2="17"></line>
+                      <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div class="cart-totals-container">
+      <h2>Cart totals</h2>
+      {% if cart %}
+        <div class="prices">
+          <div class="subtotal">
+            <p>
+              <span>Subtotal</span>
+              <span class="subtotal-price-number">{{ cart.get_total_price }}</span>
+            </p>
+          </div>
+          <div class="total">
+            <p>
+              <span>Total</span>
+              <span class="total-price-number">{{ cart.get_total_price }}</span>
+            </p>
+          </div>
         </div>
-        <div class="total">
-          <p>
-            <span>Total</span>
-            <span class="total-price-number">{{ cart.get_total_price }}</span>
-          </p>
-        </div>
-      </div>
-    {% else %}
-      <p>Your cart is empty.</p>
-    {% endif %}
+        <a class="cart-cta" href="{% url 'products' %}">Continue shopping</a>
+      {% else %}
+        <p class="cart-empty">Your cart is empty.</p>
+      {% endif %}
+    </div>
   </div>
-</div>
+</section>
 {% endblock %}

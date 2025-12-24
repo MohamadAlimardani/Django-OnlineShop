@@ -1,10 +1,37 @@
-{% extends 'base/index.html' %}
-{% load static %}
-{% block content %}
+  {% extends 'base/index.html' %}
+  {% load static %}
+  {% block content %}
 
+  <section class="product-detail">
+    <div class="product-detail__media">
+      {% if product_detail.image %}
+        <img src="{{ product_detail.image.url }}" alt="{{ product_detail.name }}">
+      {% else %}
+        <div class="product-detail__placeholder">No image available</div>
+      {% endif %}
+    </div>
+    <div class="product-detail__content">
+      <p class="product-detail__category">{{ product_detail.category }}</p>
+      <h1 class="product-detail__title">{{ product_detail.name }}</h1>
+      <p class="product-detail__description">{{ product_detail.description }}</p>
+      <div class="product-detail__meta">
+        <span class="product-detail__price">${{ product_detail.price }}</span>
+        <span class="product-detail__stock">
+          {% if product_detail.stock > 0 %}
+            In stock: {{ product_detail.stock }}
+          {% else %}
+            Out of stock
+          {% endif %}
+        </span>
+      </div>
+      {% if product_detail.stock > 0 %}
+        <form action="{% url 'cart_add' product_detail.id %}" method="POST" class="product-detail__form">
+          {% csrf_token %}
+          <button class="product-detail__cta" type="submit">Add to cart</button>
+        </form>
+      {% endif %}
+      <a class="product-detail__back" href="{% url 'products' %}">Back to products</a>
+    </div>
+  </section>
 
-
-
-
-
-{% endblock  %}
+  {% endblock  %}

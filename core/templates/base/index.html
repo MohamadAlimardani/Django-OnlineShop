@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -18,8 +18,9 @@
     <link rel="stylesheet" href="{% static 'styles/header.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/footer.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/hero.css' %}" />
-    <link rel="stylesheet" href="{% static 'styles/products.css' %}">
-    <link rel="stylesheet" href="{% static 'styles/cart_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/products.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/cart_detail.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/product_details.css' %}" />
   </head>
   <body>
     <div class="container">
@@ -27,10 +28,13 @@
         {% include 'components/header.html' %}
       </header>
       <main>
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% include 'components/hero.html' %}
+        {% endblock %}
       </main>
       <footer>
         {% include 'components/footer.html' %}
       </footer>
+    </div>
   </body>
 </html>

@@ -1,12 +1,27 @@
+﻿:root {
+  --olive-950: #131b0d;
+  --olive-900: #1c2712;
+  --olive-850: #243017;
+  --olive-800: #2c3a1d;
+  --sand-100: #f7f2df;
+  --sand-200: #ede4c6;
+  --amber-500: #d18441;
+  --gold-400: #e2b35b;
+  --sun-400: #f0a22f;
+  --accent-500: #f2c15f;
+  --accent-600: #f0a22f;
+}
+
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  font-family: "Lato", "Courier Prime", sans-serif;
+  color: var(--sand-100);
 }
 
 header {
-  background-color: #606C38;
-  height: 100px;
+  height: auto;
 }
 
 main {
@@ -14,7 +29,5 @@ main {
 }
 
 footer {
-  background-color: #606C38;
-  height: 100px;
   margin-top: auto;
 }

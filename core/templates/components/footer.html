@@ -1,3 +1,31 @@
 <div class="footer">
-  <p>&copy; 2025-2026 Olive Garden. All rights reserved.</p>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-title">Olive Garden</div>
+      <p class="footer-tagline">Premium pots, clean lines, and calming spaces.</p>
+      <div class="footer-chips">
+        <span>Indoor</span>
+        <span>Outdoor</span>
+        <span>Self-Watering</span>
+      </div>
+    </div>
+    <div class="footer-column">
+      <div class="footer-label">Shop</div>
+      <a href="{% url 'products' %}">All Pots</a>
+      <a href="{% url 'cart_detail' %}">Cart</a>
+    </div>
+    <div class="footer-column">
+      <div class="footer-label">Account</div>
+      {% if user.is_authenticated %}
+        <a href="{% url 'sign_out' %}">Sign Out</a>
+      {% else %}
+        <a href="{% url 'sign_in' %}">Log In</a>
+        <a href="{% url 'sign_up' %}">Sign Up</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="footer-legal">
+    <span>&copy; 2025-2026 Olive Garden.</span>
+    <span>All rights reserved.</span>
+  </div>
 </div>

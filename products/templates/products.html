@@ -7,12 +7,37 @@
   {% for product in products %}
   <div class="card">
     <div class="card-content">
-      <div class="image-container">
-        <img
-          id="main-image"
-          src="{{ product.image.url }}"
-          alt="{{ product.name }}"
-        />
+      <div class="card-media">
+        <div class="image-container">
+          <img
+            id="main-image"
+            src="{{ product.image.url }}"
+            alt="{{ product.name }}"
+          />
+        </div>
+        <div class="favorite">
+          <input
+            type="checkbox"
+            id="favorite-{{ forloop.counter }}"
+            class="favorite-input"
+          />
+          <label
+            for="favorite-{{ forloop.counter }}"
+            class="favorite-button"
+            aria-label="Add to favorites"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              class="favorite-icon"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 3.5 14.9 9l6.1.9-4.4 4.3 1 6.1L12 17.8 6.4 20.3l1-6.1L3 9.9 9.1 9l2.9-5.5Z"
+              />
+            </svg>
+          </label>
+        </div>
       </div>
       <div class="details-container">
         <a class="product-name-link" href="{% url 'product_details' product.slug %}">
