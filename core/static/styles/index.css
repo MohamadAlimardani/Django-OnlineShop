@@ -16,7 +16,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: "Lato", "Courier Prime", sans-serif;
+  font-family: "Nunito", sans-serif;
   color: var(--sand-100);
 }
 

@@ -1,3 +1,5 @@
+import re
+
 def password_validator(password: str) -> list:
     errors = []
     
@@ -57,10 +59,10 @@ def first_name_validator(f_name: str) -> list:
     errors = []
     
     if not f_name.isalpha():
-        return ["First name can only contain alphabetic characters."]
+        errors.append("First name can only contain alphabetic characters.")
     
     if len(f_name) < 2 or len(f_name) > 150:
-        return ["First name must be between 2 and 150 characters long."]
+        errors.append("First name must be between 2 and 150 characters long.")
     
     return errors
 
@@ -68,9 +70,16 @@ def last_name_validator(l_name: str) -> list:
     errors = []
     
     if not l_name.isalpha():
-        return ["Last name can only contain alphabetic characters."]
+        errors.append("Last name can only contain alphabetic characters.")
     
     if len(l_name) < 2 or len(l_name) > 150:
-        return ["Last name must be between 2 and 150 characters long."]
+        errors.append("Last name must be between 2 and 150 characters long.")
     
     return errors
+
+def phone_number_validator(phone_number: str) -> list:
+    pattern = r"^(?:9\d{9}|09\d{9}|\+?98\d{10})$"
+    
+    if not re.fullmatch(pattern, phone_number):
+        return ["Phone Number is not valid."]
+    

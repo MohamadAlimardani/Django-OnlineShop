@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'styles/general.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/base_auth.css' %}" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+    {% if messages %}
+    <div class="toast-stack">
+      {% for message in messages %}
+      <div class="toast toast-{{ message.tags }}">
+        <input
+          type="checkbox"
+          id="toast-auth-{{ forloop.counter }}"
+          class="toast__toggle"
+        />
+        <div class="toast__body">
+          <div class="toast__content">{{ message }}</div>
+          <div class="toast__timer"></div>
+        </div>
+        <label class="toast__close" for="toast-auth-{{ forloop.counter }}">×</label>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <main>{% block content %}{% endblock %}</main>
+  </body>
+</html>

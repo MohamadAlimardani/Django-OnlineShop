@@ -1,4 +1,4 @@
-{% extends 'base_auth.html' %} {% load static %} {% block content %}
+{% extends 'base/base_auth.html' %} {% load static %} {% block content %}
 <div class="content-wrapper">
   <div class="welcome-wrapper">
     <div
@@ -48,6 +48,13 @@
             </div>
           {% endif %}
           
+          {{ form.phone_number }}
+          {% if form.phone_number.errors %}
+            <div class="field-errors">
+              {{ form.phone_number.errors }}
+            </div>
+          {% endif %}
+
           {{ form.email }}
           {% if form.email.errors %}
             <div class="field-errors">

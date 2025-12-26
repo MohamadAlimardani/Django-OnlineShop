@@ -39,6 +39,7 @@
     flex-direction: column;
     gap: 16px;
     color: #f4f1d6;
+    font-family: "Nunito", sans-serif;
   }
 
   .product-detail__category {

@@ -1,13 +1,26 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .validators import (
-    first_name_validator, 
-    last_name_validator, 
-    username_validator, 
-    password_validator
-)
+from .validators import *
+from .models import OtpCode
 
 User = get_user_model()
+
+def normalize_ir_mobile(phone_number: str) -> str | None:
+    phone_number = (phone_number or "").strip()
+
+    if re.fullmatch(r"9\d{9}", phone_number):          # 9365238854
+        return "0" + phone_number                      # -> 09365238854
+
+    if re.fullmatch(r"09\d{9}", phone_number):         # 09365238854
+        return phone_number
+
+    if re.fullmatch(r"\+98\d{10}", phone_number):      # +989365238854
+        return "0" + phone_number[3:]                  # -> 09365238854
+
+    if re.fullmatch(r"98\d{10}", phone_number):        # 989365238854
+        return "0" + phone_number[2:]                  # -> 09365238854
+
+    return None
 
 class SignUpForm(forms.ModelForm):
     confirm_password = forms.CharField(
@@ -16,11 +29,12 @@ class SignUpForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'email', 'password']
+        fields = ['first_name', 'last_name', 'username','phone_number', 'email', 'password']
         widgets = {
             'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
             'username': forms.TextInput(attrs={'placeholder': 'Username'}),
+            'phone_number': forms.TextInput(attrs={'placeholder': 'Phone Number'}),
             'email': forms.EmailInput(attrs={'placeholder': 'Email Address'}),
             'password': forms.PasswordInput(attrs={'placeholder': 'Password'})
         }
@@ -43,11 +57,20 @@ class SignUpForm(forms.ModelForm):
         username = self.cleaned_data.get('username')
         errors = username_validator(username)
         if User.objects.filter(username=username).exists():
-            errors.append("Username already exists")
+            errors.append("Username already exists.")
         if errors:
             raise forms.ValidationError(errors)
         return username
 
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        errors = phone_number_validator(phone_number)
+        # if User.objects.filter(phone_number=phone_number).exists():
+        #     raise forms.ValidationError("Phone number already exists.")
+        if errors:
+            raise forms.ValidationError(errors)
+        return normalize_ir_mobile(phone_number)
+    
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
@@ -76,3 +99,9 @@ class SignUpForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+class OtpForm(forms.Form):
+    code = forms.CharField(
+        max_length=6,
+        widget=forms.TextInput(attrs={'placeholder': 'Verification Code'})
+    )

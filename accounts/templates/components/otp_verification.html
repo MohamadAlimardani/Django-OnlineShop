@@ -1,0 +1,66 @@
+{% extends "base/base_auth.html" %}
+{% load static %}
+{% block content %}
+<div class="login-content-wrapper otp-layout">
+  <div class="welcome-wrapper">
+    <div class="welcome-title">
+      <span class="welcome-span">Almost there</span>
+      <span class="logo">OliveGarden</span>
+      <p class="otp-subtitle">Enter the verification code we sent to you.</p>
+    </div>
+  </div>
+  <div class="login-form-container">
+    <div class="login-form-wrapper otp-form-wrapper">
+      <div class="title">
+        <h1>Verify code</h1>
+        <p>Check your email or SMS for the 6-digit code.</p>
+      </div>
+      <form method="POST" class="otp-form">
+        {% csrf_token %}
+        <div class="otp-inputs">
+          {{ form.as_p }}
+        </div>
+        <div class="btn-wrapper">
+          <button type="submit">Verify code</button>
+        </div>
+      </form>
+
+      <form method="POST" action="{% url 'resend_otp' %}" class="otp-resend">
+        {% csrf_token %}
+        <button
+          id="resendBtn"
+          type="submit"
+          class="otp-resend-btn"
+          {% if cooldown_left > 0 %}disabled{% endif %}>
+          Resend
+        </button>
+
+        <span id="timerText" {% if cooldown_left == 0 %}style="display:none"{% endif %}>
+          You can resend in <b id="secs">{{ cooldown_left }}</b>s
+        </span>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  let left = Number({{ cooldown_left|default:0 }});
+  const btn = document.getElementById("resendBtn");
+  const timerText = document.getElementById("timerText");
+  const secs = document.getElementById("secs");
+
+  if (left > 0) {
+    timerText.style.display = "inline";
+    const t = setInterval(() => {
+      left -= 1;
+      if (left <= 0) {
+        clearInterval(t);
+        btn.disabled = false;
+        timerText.style.display = "none";
+      } else {
+        secs.textContent = left;
+      }
+    }, 1000);
+  }
+</script>
+{% endblock %}

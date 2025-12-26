@@ -49,7 +49,7 @@
 .logo a {
   font-size: clamp(24px, 2.8vw, 36px);
   font-weight: 600;
-  font-family: "Pacifico", "Lato", sans-serif;
+  font-family: "Pacifico", "Nunito", sans-serif;
   line-height: 1;
   letter-spacing: 0.5px;
   text-decoration: none;
@@ -143,7 +143,7 @@
   border-radius: 999px;
   border: 1px solid rgba(254, 245, 216, 0.35);
   background: rgba(255, 255, 255, 0.08);
-  font-family: "Roboto", "Lato", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 12px;
   letter-spacing: 0.6px;
   text-transform: uppercase;
@@ -175,7 +175,7 @@
   justify-content: center;
   flex-direction: row;
   gap: 8px;
-  font-family: "Roboto", "Lato", sans-serif;
+  font-family: "Nunito", sans-serif;
   color: #fef5d8;
   padding: 6px 12px;
   border-radius: 999px;

@@ -5,7 +5,7 @@
   padding: clamp(36px, 8vw, 96px) clamp(20px, 6vw, 72px);
   background:
     linear-gradient(120deg, rgba(18, 24, 11, 0.55), rgba(18, 24, 11, 0.2)),
-    url("../images/pexels-olgalioncat-7245619.jpg") center/cover no-repeat;
+    url("https://images.pexels.com/photos/7245619/pexels-photo-7245619.jpeg") center/cover no-repeat;
   border-bottom: 1px solid rgba(254, 250, 224, 0.2);
 }
 
@@ -22,7 +22,7 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   color: rgba(254, 245, 216, 0.8);
-  font-family: "Roboto", "Lato", sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 .home-hero h1 {

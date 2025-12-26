@@ -5,7 +5,7 @@ body {
   flex-direction: column;
   background-color: #283618;
   color: #FEFAE0;
-  font-family: Georgia;
+  font-family: "Nunito", sans-serif;
 }
 
 body p, h2 {
