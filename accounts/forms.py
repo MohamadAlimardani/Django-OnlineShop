@@ -8,17 +8,17 @@ User = get_user_model()
 def normalize_ir_mobile(phone_number: str) -> str | None:
     phone_number = (phone_number or "").strip()
 
-    if re.fullmatch(r"9\d{9}", phone_number):          # 9365238854
-        return "0" + phone_number                      # -> 09365238854
+    if re.fullmatch(r"9\d{9}", phone_number):          # 912xxx6789
+        return "0" + phone_number                      # -> 0912xxx6789
 
-    if re.fullmatch(r"09\d{9}", phone_number):         # 09365238854
+    if re.fullmatch(r"09\d{9}", phone_number):         # 0912xxx6789
         return phone_number
 
-    if re.fullmatch(r"\+98\d{10}", phone_number):      # +989365238854
-        return "0" + phone_number[3:]                  # -> 09365238854
+    if re.fullmatch(r"\+98\d{10}", phone_number):      # +98912xxx6789
+        return "0" + phone_number[3:]                  # -> 0912xxx6789
 
-    if re.fullmatch(r"98\d{10}", phone_number):        # 989365238854
-        return "0" + phone_number[2:]                  # -> 09365238854
+    if re.fullmatch(r"98\d{10}", phone_number):        # 98912xxx6789
+        return "0" + phone_number[2:]                  # -> 0912xxx6789
 
     return None
 
@@ -40,14 +40,14 @@ class SignUpForm(forms.ModelForm):
         }
 
     def clean_first_name(self):
-        f_name = self.cleaned_data.get('first_name')
+        f_name = self.cleaned_data.get('first_name').capitalize()
         errors = first_name_validator(f_name)
         if errors:
             raise forms.ValidationError(errors)
         return f_name
 
     def clean_last_name(self):
-        l_name = self.cleaned_data.get('last_name')
+        l_name = self.cleaned_data.get('last_name').capitalize()
         errors = last_name_validator(l_name)
         if errors:
             raise forms.ValidationError(errors)

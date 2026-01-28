@@ -65,6 +65,7 @@
   .product-detail__meta {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 16px;
     padding: 12px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -75,15 +76,18 @@
     font-size: 24px;
     font-weight: 700;
     color: var(--accent-500);
+    margin-left: 15px;
   }
 
   .product-detail__stock {
     font-size: 14px;
     color: #bdb89c;
+    margin-right: 15px;
   }
 
   .product-detail__form {
     margin-top: 8px;
+    margin-left: 10px;
   }
 
   .product-detail__cta {
@@ -107,6 +111,7 @@
     text-decoration: none;
     font-size: 14px;
     margin-top: 8px;
+    margin-left: 15px;
   }
 
   .product-detail__back:hover {

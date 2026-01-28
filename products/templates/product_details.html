@@ -1,4 +1,4 @@
-  {% extends 'base/index.html' %}
+  {% extends 'base/base.html' %}
   {% load static %}
   {% block content %}
 
@@ -18,7 +18,7 @@
         <span class="product-detail__price">${{ product_detail.price }}</span>
         <span class="product-detail__stock">
           {% if product_detail.stock > 0 %}
-            In stock: {{ product_detail.stock }}
+            {{ product_detail.stock }} In stock
           {% else %}
             Out of stock
           {% endif %}
@@ -27,6 +27,7 @@
       {% if product_detail.stock > 0 %}
         <form action="{% url 'cart_add' product_detail.id %}" method="POST" class="product-detail__form">
           {% csrf_token %}
+          <input type="hidden" name="current_page" value="{{ request.get_full_path }}">
           <button class="product-detail__cta" type="submit">Add to cart</button>
         </form>
       {% endif %}

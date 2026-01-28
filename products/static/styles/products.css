@@ -1,8 +1,6 @@
 body {
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
   background-color: #283618;
   color: #FEFAE0;
   font-family: "Nunito", sans-serif;
@@ -67,7 +65,7 @@ body p, h2 {
 }
 
 .card:hover {
-  transform: translateY(-6px);
+  transform: scale(1.01);
   border-color: rgba(254, 250, 224, 0.3);
   box-shadow: 0 22px 40px rgba(0, 0, 0, 0.3);
 }
@@ -104,7 +102,7 @@ body p, h2 {
 }
 
 .card:hover #main-image {
-  transform: scale(1.03);
+  transform: scale(1.01);
 }
 
 .favorite {
@@ -224,6 +222,8 @@ body p, h2 {
 
 #price {
   flex: 1;
+  margin-right: auto;
+  text-align: left;
   font-weight: bold;
   font-size: 20px;
   color: var(--accent-500);
@@ -258,3 +258,5 @@ body p, h2 {
 .button-container button:active {
   transform: scale(0.98);
 }
+
+

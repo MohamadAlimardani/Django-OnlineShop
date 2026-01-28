@@ -22,7 +22,7 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   color: rgba(254, 245, 216, 0.8);
-  font-family: "Nunito", sans-serif;
+  /* font-family: "Nunito", sans-serif; */
 }
 
 .home-hero h1 {

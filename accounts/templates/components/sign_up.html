@@ -2,7 +2,7 @@
 <div class="content-wrapper">
   <div class="welcome-wrapper">
     <div
-      class="welcome-title" id="signup-welcome-title">
+      class="welcome-title">
       <h3>
         <span class="welcome-span">Welcome to</span>
         <span class="logo-span">OliveGarden</span>
@@ -24,7 +24,7 @@
             </div>
           {% endif %}
           <div class="fname-lname">
-            <div class="first-name-container">
+            <div>
               {{ form.first_name }}
               {% if form.first_name.errors %}
                 <div class="field-errors">
@@ -32,7 +32,7 @@
                 </div>
               {% endif %}
             </div>
-            <div class="last-name-container">
+            <div>
               {{ form.last_name }}
               {% if form.last_name.errors %}
                 <div class="field-errors">
@@ -54,7 +54,7 @@
               {{ form.phone_number.errors }}
             </div>
           {% endif %}
-
+          
           {{ form.email }}
           {% if form.email.errors %}
             <div class="field-errors">
@@ -75,7 +75,7 @@
               {{ form.confirm_password.errors }}
             </div>
           {% endif %}
-
+          
           
         </div>
         <div class="btn-wrapper">

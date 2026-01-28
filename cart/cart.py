@@ -1,6 +1,7 @@
 from decimal import Decimal
 from products.models import Product
 
+
 class Cart:
     def __init__(self, request):
         self.session = request.session
@@ -11,7 +12,7 @@ class Cart:
         
         self.cart = cart
 
-    def add(self, product, quantity=1, override_quantity=False):
+    def add(self, product, quantity=1):
         product_id = str(product.id)
         
         if product.stock < quantity:
@@ -25,9 +26,12 @@ class Cart:
         
         new_quantity = self.cart[product_id]['quantity'] + quantity
         
-        if new_quantity <= product.stock:
-            self.cart[product_id]['quantity'] = new_quantity
+        if new_quantity <= 0:
+            del self.cart[product_id]
         
+        elif new_quantity <= product.stock:
+            self.cart[product_id]['quantity'] = new_quantity
+        print(f"\n\n\n\nThis is Cart:\n{self.cart}\n\n\n\n")
         self.save()
     
     def update(self, product, quantity):
@@ -39,6 +43,7 @@ class Cart:
             else:
                 del self.cart[product_id]
             
+            print(f"\n\n\n\nThis is Cart:\n{self.cart}\n\n\n\n")
             self.save()
     
     def save(self):
@@ -49,7 +54,11 @@ class Cart:
         
         if product_id in self.cart:
             del self.cart[product_id]
+            print(f"\n\n\n\nThis is Cart:\n{self.cart}\n\n\n\n")
             self.save()
+    
+    def __len__(self):
+        return len(self.cart)
     
     def __iter__(self):
         product_ids = self.cart.keys()
@@ -61,6 +70,7 @@ class Cart:
         for item in self.cart.values():
             item['price'] = Decimal(item['price'])
             item['total_price'] = Decimal(item['price'] * item['quantity'])
+            print(f"\n\n\n{item}\n\n\n")
             yield item
     
     def get_quantity(self, product):

@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --olive-950: #131b0d;
   --olive-900: #1c2712;
   --olive-850: #243017;
@@ -13,8 +13,6 @@
 }
 
 body {
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
   font-family: "Nunito", sans-serif;
   color: var(--sand-100);
@@ -31,3 +29,4 @@ main {
 footer {
   margin-top: auto;
 }
+

@@ -127,7 +127,7 @@ def resend_otp(request):
     
     now = timezone.now()
     
-    cooldown = getattr(settings, "OTP_RESEND_COOLDOWN_SECONDS", 60)
+    cooldown = getattr(settings, "OTP_RESEND_COOLDOWN_SECONDS", 120)
     latest_otp = OtpCode.objects.filter(user=user).order_by('-created_at').first()
     
     if latest_otp and now < latest_otp.created_at + timedelta(seconds=cooldown):

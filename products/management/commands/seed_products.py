@@ -8,7 +8,7 @@ from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 
-from products.models import Product
+from products.models import Category, Product
 
 
 IMAGE_URLS = [
@@ -175,6 +175,14 @@ class Command(BaseCommand):
         if clear:
             Product.objects.all().delete()
 
+        category_map = {}
+        for name in CATEGORIES:
+            cat, _ = Category.objects.get_or_create(
+                name=name,
+                defaults={"slug": slugify(name)}
+            )
+            category_map[name] = cat
+        
         rng = random.Random(seed)
         image_cache = {}
 
@@ -190,7 +198,9 @@ class Command(BaseCommand):
                 f"{rng.choice(DESC_ENDS)}"
             )
 
-            category = rng.choice(CATEGORIES)
+            category_name = rng.choice(CATEGORIES)
+            category_obj = category_map[category_name]
+            
             dollars = rng.randint(8, 120)
             cents = rng.choice([0, 5, 9, 25, 49, 75, 95])
             price = Decimal(f"{dollars}.{cents:02d}")
@@ -199,7 +209,7 @@ class Command(BaseCommand):
             product = Product(
                 name=name,
                 description=description,
-                category=category,
+                category=category_obj,
                 price=price,
                 stock=stock,
             )

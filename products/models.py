@@ -1,32 +1,47 @@
 from django.db import models
-from django.utils.text import slugify
 
-# Create your models here.
+
+class Category(models.Model):
+    name = models.CharField(
+        max_length=50,
+        unique=True,
+    )
+
+    slug = models.SlugField(unique=True)
+
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
+
     description = models.TextField(max_length=1000)
-    category = models.CharField(max_length=25)
+
+    category = models.ForeignKey(
+        Category, on_delete=models.PROTECT, related_name="products"
+    )
+
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    stock = models.PositiveIntegerField()
-    image = models.ImageField(upload_to='product_images/', null=True, blank=True)
+
+    stock = models.PositiveSmallIntegerField()
+
+    image = models.ImageField(upload_to="Products_Images/", null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     slug = models.SlugField(unique=True, max_length=255)
-    
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            base_slug = slugify(self.name)
-            slug = base_slug
-            counter = 1
 
-            while Product.objects.filter(slug=slug).exists():
-                slug = f"{base_slug}-{counter}"
-                counter += 1
 
-            self.slug = slug
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="images"
+    )
 
-        super().save(*args, **kwargs)
-    
+    image = models.ImageField(upload_to="Products_Images/Gallery")
+
+    alt = models.CharField(max_length=150, blank=True)
+
     def __str__(self):
-        return self.name
+        return f"{self.product.name}'s Image."

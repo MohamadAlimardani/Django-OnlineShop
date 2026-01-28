@@ -12,10 +12,14 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / ".env")
+
+API_KEY = os.getenv("API_KEY", "")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -28,13 +32,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'accounts.User'
+
+ROOT_URLCONF = 'OliveGarden.urls'
+
 OTP_EXPIRE_MINUTES = 2
-OTP_RESEND_COOLDOWN_SECONDS = 60
+OTP_RESEND_COOLDOWN_SECONDS = 120
 OTP_MAX_RESENDS_PER_HOUR = 5
 
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +55,7 @@ INSTALLED_APPS = [
     'products',
     'accounts',
     'cart',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -61,10 +72,6 @@ AUTHENTICATION_BACKENDS = [
     'accounts.backends.EmailOrUsernameBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-AUTH_USER_MODEL = 'accounts.User'
-
-ROOT_URLCONF = 'OliveGarden.urls'
 
 TEMPLATES = [
     {
@@ -140,6 +147,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # URL to access the media files in the browser
 MEDIA_URL = '/media/'
