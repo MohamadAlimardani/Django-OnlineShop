@@ -9,7 +9,7 @@
     <div class="middle-section">
       <div class="search-bar">
         <input type="text" placeholder="Search pots, sizes, finishes" />
-        <button>
+        <button type="submit">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -28,7 +28,7 @@
     <div class="right-section">
       <div class="products">
         <a href="{% url 'products' %}" class="nav-icon">
-          <span>Products</span>
+          <span class="nav-label wave-swap">Products</span>
         </a>
       </div>
       <div class="cart">
@@ -47,7 +47,11 @@
             <circle cx="18" cy="20" r="1.7"/>
             <path d="M3 4h2.5l2.4 10.2a2 2 0 0 0 2 1.5h7.6a2 2 0 0 0 1.9-1.3l2-6.4H7.1"/>
           </svg>
-          <span class="nav-label">Cart</span>
+          {% if cart|length %}
+          <span class="cart-count">{{ cart|length }}</span>
+          {% else %}
+          <span class="nav-label wave-swap">Cart</span>
+          {% endif %}
         </a>
       </div>
       {% if user.is_authenticated %}
@@ -72,15 +76,19 @@
       <div class="sign_out">
         <a href="{% url 'sign_out' %}" class="nav-icon nav-icon--outline">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="icon-stroke"><path d="M15 4h-7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7"/><path d="M10 12h10"/><path d="M16 8l4 4-4 4"/></svg>
-          <span class="nav-label">Log out</span>
+          <span class="nav-label wave-swap">Log out</span>
         </a>
       </div>
       {% else %}
       <div class="login">
-        <a href="{% url 'sign_in' %}" class="nav-icon"> Log In </a>
+        <a href="{% url 'sign_in' %}" class="nav-icon">
+          <span class="nav-label wave-swap">Log In</span>
+        </a>
       </div>
       <div class="sign-up">
-        <a href="{% url 'sign_up' %}" class="nav-icon">Sign Up</a>
+        <a href="{% url 'sign_up' %}" class="nav-icon" id="sign-up-nav-icon">
+          <span class="nav-label wave-swap">Sign Up</span>
+        </a>
       </div>
       {% endif %}
     </div>

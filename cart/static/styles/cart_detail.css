@@ -198,6 +198,7 @@
   justify-content: center;
   align-items: center;
   padding: 12px 16px;
+  border: none;
   border-radius: 999px;
   background: linear-gradient(120deg, var(--accent-500), var(--accent-600));
   color: #2a1b0b;
@@ -207,6 +208,7 @@
   text-transform: uppercase;
   font-size: 12px;
   transition: transform 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
 }
 
 .empty-cart-btn button:disabled {
@@ -260,4 +262,27 @@
 
 .empty-cart {
   text-align: center;
+}
+
+.wave-swap { 
+  display: inline-flex;
+  gap: 0;
+  line-height: 1;
+}
+
+a:hover .wave-letter .wave-top,
+a:hover .wave-letter .wave-bottom,
+button:hover .wave-letter .wave-top,
+button:hover .wave-letter .wave-bottom {
+  transition-delay: calc(var(--i) * 25ms);
+}
+
+a:hover .wave-letter .wave-top,
+button:hover .wave-letter .wave-top {
+  transform: translateY(-100%);
+}
+
+a:hover .wave-letter .wave-bottom,
+button:hover .wave-letter .wave-bottom {
+  transform: translateY(0);
 }

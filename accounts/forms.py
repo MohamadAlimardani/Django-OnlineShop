@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
+
 from .validators import *
-from .models import OtpCode
 
 User = get_user_model()
 

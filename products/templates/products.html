@@ -55,8 +55,10 @@
       <form action="{% url 'cart_add' product.id %}" method="POST">
         {% csrf_token %}
         <div class="button-container">
-          <input type="hidden" name="current_page" value="{{ request.get_full_path }}#product-{{ product.id }}">
-          <button type="submit">Add to cart</button>
+          <input type="hidden" name="redirection_page" value="{{ request.get_full_path }}#product-{{ product.id }}">
+          <button type="submit">
+            <span class="wave-swap">Add to cart</span>
+          </button>
         </div>
       </form>
       {% else %}

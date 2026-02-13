@@ -65,7 +65,7 @@ body p, h2 {
 }
 
 .card:hover {
-  transform: scale(1.01);
+  /* transform: scale(1.007); */
   border-color: rgba(254, 250, 224, 0.3);
   box-shadow: 0 22px 40px rgba(0, 0, 0, 0.3);
 }
@@ -101,9 +101,9 @@ body p, h2 {
   transition: transform 0.4s ease;
 }
 
-.card:hover #main-image {
-  transform: scale(1.01);
-}
+/* .card:hover #main-image {
+  transform: scale(1.007);
+} */
 
 .favorite {
   position: absolute;
@@ -151,7 +151,7 @@ body p, h2 {
 
 .favorite-input:checked + .favorite-button {
   background: linear-gradient(120deg, rgba(242, 193, 95, 0.35), rgba(240, 162, 47, 0.35));
-  border-color: rgba(242, 193, 95, 0.8);
+  border-color: rgba(240, 186, 79, 0.8);
   color: var(--accent-500);
 }
 
@@ -246,17 +246,35 @@ body p, h2 {
   cursor: pointer;
   text-decoration: none;
   font-weight: bold;
+  font-size: 16px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
   box-shadow: 0 12px 22px rgba(0, 0, 0, 0.25);
 }
 
 .button-container button:hover {
   filter: brightness(1.05);
-  transform: translateY(-1px);
+  transform: scale(0.98);
 }
 
 .button-container button:active {
   transform: scale(0.98);
 }
 
+.wave-swap {
+  display: inline-block;
+  gap: 0;
+  line-height: 1;
+}
 
+button:hover .wave-letter .wave-top,
+button:hover .wave-letter .wave-bottom {
+  transition-delay: calc(var(--i) * 25ms);
+}
+
+button:hover .wave-letter .wave-top {
+  transform: translateY(-100%);
+}
+
+button:hover .wave-letter .wave-bottom {
+  transform: translateY(0);
+}

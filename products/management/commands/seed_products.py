@@ -1,31 +1,14 @@
-import os
 import random
-import urllib.error
-import urllib.request
 from decimal import Decimal
+from pathlib import Path
 
+from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 
 from products.models import Category, Product
 
-
-IMAGE_URLS = [
-    "https://images.pexels.com/photos/1191318/pexels-photo-1191318.jpeg",
-    "https://images.pexels.com/photos/1058771/pexels-photo-1058771.jpeg",
-    "https://images.pexels.com/photos/1323020/pexels-photo-1323020.jpeg",
-    "https://images.pexels.com/photos/4065159/pexels-photo-4065159.jpeg",
-    "https://images.pexels.com/photos/1824189/pexels-photo-1824189.jpeg",
-    "https://images.pexels.com/photos/4505452/pexels-photo-4505452.jpeg",
-    "https://images.pexels.com/photos/4273440/pexels-photo-4273440.jpeg",
-    "https://images.pexels.com/photos/2108514/pexels-photo-2108514.jpeg",
-    "https://images.pexels.com/photos/7184409/pexels-photo-7184409.jpeg",
-    "https://images.pexels.com/photos/10295068/pexels-photo-10295068.jpeg",
-    "https://images.pexels.com/photos/35267737/pexels-photo-35267737.jpeg",
-    "https://images.pexels.com/photos/4505447/pexels-photo-4505447.jpeg",
-    "https://images.pexels.com/photos/6640243/pexels-photo-6640243.jpeg"
-]
 
 CATEGORIES = [
     "Ceramic",
@@ -41,49 +24,17 @@ CATEGORIES = [
 ]
 
 ADJECTIVES = [
-    "Minimal",
-    "Matte",
-    "Glazed",
-    "Rustic",
-    "Modern",
-    "Classic",
-    "Stacked",
-    "Ridged",
-    "Sleek",
-    "Textured",
-    "Handcrafted",
-    "Natural",
-    "Soft-Tone",
-    "Tall",
-    "Wide",
-    "Compact",
-    "Studio",
-    "Pebble",
-    "Stone",
-    "Sand",
+    "Minimal", "Matte", "Glazed", "Rustic", "Modern", "Classic", "Stacked", "Ridged",
+    "Sleek", "Textured", "Handcrafted", "Natural", "Soft-Tone", "Tall", "Wide",
+    "Compact", "Studio", "Pebble", "Stone", "Sand",
 ]
 
 POT_TYPES = [
-    "Cylinder Planter",
-    "Bowl Planter",
-    "Footed Pot",
-    "Hanging Planter",
-    "Window Box",
-    "Herb Pot",
-    "Nursery Pot",
-    "Desk Pot",
-    "Corner Planter",
-    "Oval Planter",
-    "Cube Planter",
-    "Urn Planter",
-    "Tapered Pot",
-    "Ribbed Planter",
-    "Self-Watering Pot",
-    "Pedestal Planter",
-    "Round Pot",
-    "Square Pot",
-    "Rattan Basket Pot",
-    "Terrace Planter",
+    "Cylinder Planter", "Bowl Planter", "Footed Pot", "Hanging Planter", "Window Box",
+    "Herb Pot", "Nursery Pot", "Desk Pot", "Corner Planter", "Oval Planter",
+    "Cube Planter", "Urn Planter", "Tapered Pot", "Ribbed Planter",
+    "Self-Watering Pot", "Pedestal Planter", "Round Pot", "Square Pot",
+    "Rattan Basket Pot", "Terrace Planter",
 ]
 
 DESC_LEADS = [
@@ -119,31 +70,15 @@ DESC_ENDS = [
 
 SIZES = ["Small", "Medium", "Large", "XL"]
 
-
-def _download_bytes(url, cache):
-    if url in cache:
-        return cache[url]
-    try:
-        request = urllib.request.Request(
-            url,
-            headers={"User-Agent": "Mozilla/5.0"},
-        )
-        with urllib.request.urlopen(request, timeout=10) as response:
-            data = response.read()
-        if data:
-            cache[url] = data
-            return data
-    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError):
-        return None
-    return None
+ALLOWED_IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 
 
-def _make_svg_placeholder(name, seed):
+def _make_svg_placeholder(name: str, seed: int) -> bytes:
     colors = ["#606c38", "#283618", "#d18441", "#e2b35b", "#fefae0"]
     rng = random.Random(seed)
     c1 = rng.choice(colors)
     c2 = rng.choice(colors)
-    title = name[:28]
+    title = name[:28].replace("&", "and")
     svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -159,35 +94,89 @@ def _make_svg_placeholder(name, seed):
     return svg.encode("utf-8")
 
 
+def _unique_slug(base: str, used_slugs: set[str], max_len: int = 255) -> str:
+    base = (base or "product")[:max_len]
+    slug = base
+    counter = 1
+    while slug in used_slugs:
+        suffix = f"-{counter}"
+        slug = f"{base[: max_len - len(suffix)]}{suffix}"
+        counter += 1
+    used_slugs.add(slug)
+    return slug
+
+
+def _collect_images(images_dir: Path) -> list[Path]:
+    if not images_dir.exists() or not images_dir.is_dir():
+        return []
+    files = []
+    for p in images_dir.iterdir():
+        if p.is_file() and p.suffix.lower() in ALLOWED_IMAGE_EXTS:
+            files.append(p)
+    return files
+
+
 class Command(BaseCommand):
-    help = "Seed the database with realistic flower pot products."
+    help = "Seed the database with realistic flower pot products using local images."
 
     def add_arguments(self, parser):
         parser.add_argument("--count", type=int, default=50)
         parser.add_argument("--seed", type=int, default=11)
         parser.add_argument("--clear", action="store_true")
+        parser.add_argument("--progress-every", type=int, default=10)
+
+        # You can pass an absolute path or a path relative to BASE_DIR
+        parser.add_argument(
+            "--images-dir",
+            type=str,
+            default="products/seed_images",
+            help="Folder containing images (relative to BASE_DIR or absolute).",
+        )
 
     def handle(self, *args, **options):
-        count = options["count"]
-        seed = options["seed"]
-        clear = options["clear"]
+        count: int = options["count"]
+        seed: int = options["seed"]
+        clear: bool = options["clear"]
+        progress_every: int = options["progress_every"]
+        images_dir_arg: str = options["images_dir"]
 
         if clear:
             Product.objects.all().delete()
 
-        category_map = {}
+        # Categories once
+        category_map: dict[str, Category] = {}
         for name in CATEGORIES:
             cat, _ = Category.objects.get_or_create(
                 name=name,
-                defaults={"slug": slugify(name)}
+                defaults={"slug": slugify(name)[:255] or name.lower()},
             )
             category_map[name] = cat
-        
+
         rng = random.Random(seed)
-        image_cache = {}
+
+        # Preload slugs once
+        used_slugs = set(Product.objects.values_list("slug", flat=True))
+
+        # Resolve images dir (relative -> BASE_DIR)
+        images_dir_path = Path(images_dir_arg)
+        if not images_dir_path.is_absolute():
+            images_dir_path = Path(settings.BASE_DIR) / images_dir_path
+
+        image_files = _collect_images(images_dir_path)
+        if image_files:
+            self.stdout.write(self.style.SUCCESS(
+                f"Found {len(image_files)} images in: {images_dir_path}"
+            ))
+        else:
+            self.stdout.write(self.style.WARNING(
+                f"No images found in: {images_dir_path} (will use SVG placeholders)"
+            ))
 
         created = 0
         for i in range(count):
+            if progress_every and (i % progress_every == 0):
+                self.stdout.write(f"Seeding {i}/{count}...")
+
             adjective = rng.choice(ADJECTIVES)
             pot_type = rng.choice(POT_TYPES)
             size = rng.choice(SIZES)
@@ -198,13 +187,14 @@ class Command(BaseCommand):
                 f"{rng.choice(DESC_ENDS)}"
             )
 
-            category_name = rng.choice(CATEGORIES)
-            category_obj = category_map[category_name]
-            
+            category_obj = category_map[rng.choice(CATEGORIES)]
             dollars = rng.randint(8, 120)
             cents = rng.choice([0, 5, 9, 25, 49, 75, 95])
             price = Decimal(f"{dollars}.{cents:02d}")
             stock = rng.randint(5, 120)
+
+            base_slug = slugify(name) or f"product-{i}"
+            slug = _unique_slug(base_slug, used_slugs)
 
             product = Product(
                 name=name,
@@ -212,19 +202,23 @@ class Command(BaseCommand):
                 category=category_obj,
                 price=price,
                 stock=stock,
+                slug=slug,
             )
 
-            image_url = rng.choice(IMAGE_URLS)
-            image_bytes = _download_bytes(image_url, image_cache)
-
-            if not image_bytes:
+            # Pick a random local image (offline + fast)
+            if image_files:
+                chosen = rng.choice(image_files)
+                try:
+                    image_bytes = chosen.read_bytes()
+                    ext = chosen.suffix.lower() or ".jpg"
+                except OSError:
+                    image_bytes = _make_svg_placeholder(name, seed + i)
+                    ext = ".svg"
+            else:
                 image_bytes = _make_svg_placeholder(name, seed + i)
                 ext = ".svg"
-            else:
-                ext = os.path.splitext(image_url.split("?")[0])[1] or ".jpg"
 
-            base_name = f"{slugify(name)}-{i}"
-            filename = f"{base_name}{ext}"
+            filename = f"{slug}-{i}{ext}"
             product.image.save(filename, ContentFile(image_bytes), save=False)
 
             product.save()

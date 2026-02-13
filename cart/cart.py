@@ -84,6 +84,9 @@ class Cart:
             Decimal(item['price'] * item['quantity'])
             for item in self.cart.values()
         )
+    
+    def get_total_items_in_cart(self):
+        return len(self.cart.keys())
 
     def clear(self):
         self.session.pop('cart', None)

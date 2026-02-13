@@ -65,7 +65,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  min-width: 140px;
   font-family: "Nunito", sans-serif;
 }
 
@@ -74,11 +73,6 @@
   color: rgba(254, 250, 224, 0.8);
   font-size: 13px;
   transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.footer-column a:hover {
-  color: var(--accent-500);
-  transform: translateX(2px);
 }
 
 .footer-label {
@@ -103,4 +97,27 @@
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.wave-swap { 
+  display: inline-flex;
+  gap: 0;
+  line-height: 1;
+}
+
+a:hover .wave-letter .wave-top,
+a:hover .wave-letter .wave-bottom,
+button:hover .wave-letter .wave-top,
+button:hover .wave-letter .wave-bottom {
+  transition-delay: calc(var(--i) * 25ms);
+}
+
+a:hover .wave-letter .wave-top,
+button:hover .wave-letter .wave-top {
+  transform: translateY(-100%);
+}
+
+a:hover .wave-letter .wave-bottom,
+button:hover .wave-letter .wave-bottom {
+  transform: translateY(0);
 }

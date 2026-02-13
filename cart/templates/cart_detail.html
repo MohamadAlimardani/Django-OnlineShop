@@ -1,4 +1,8 @@
-{% extends "base/base.html" %} {% block content %} {% load static %}
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% load static %}
 
 <section class="cart-page">
   <div class="cart-header">
@@ -23,7 +27,7 @@
         </thead>
         <tbody>
           <tr>
-            {% if cart %}
+            {% if cart.cart %}
               {% for item in cart %}
                 <tr>
                   <td class="tg-0lax">
@@ -47,7 +51,7 @@
                           type="submit"
                           name="action"
                           value="decrease"
-                          {% if item.quantity <= "1" %}disabled{%endif%}>
+                          {% if item.quantity <= 1 %}disabled{%endif%}>
                           &#8722;
                         </button>
                         <p>{{ item.quantity }}</p>
@@ -105,13 +109,7 @@
         </tbody>
       </table>
     </div>
-
-   +++ <div class="cart-totals-container">
-
-
-
-
-
+    <div class="cart-totals-container">
       <h2>Cart totals</h2>
       <div class="prices">
         <div class="subtotal">
@@ -127,17 +125,21 @@
           </p>
         </div>
       </div>
-      <a class="cart-cta" href="{% url 'products' %}">Continue shopping</a>
+      <a class="cart-cta" href="{% url 'products' %}">
+        <span class="nav-label wave-swap">Continue shopping</span>
+      </a>
     </div>
   </div>
 
   <div class="empty-cart-btn">
+    {% if cart|length > 0 %}
     <form action="{% url 'clear_cart' %}" method="POST">
       {% csrf_token %}
-      <button type="submit" {% if not cart %}disabled{% endif %}>
-        Empty cart
+      <button type="submit">
+        <span class="wave-swap">Empty Cart</span>
       </button>
     </form>
+    {% endif %}
   </div>
 </section>
 

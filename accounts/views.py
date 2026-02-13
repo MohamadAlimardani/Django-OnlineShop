@@ -4,11 +4,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.conf import settings
+
+import random as rnd
+from datetime import timedelta
+
+from cart.cart import Cart
+from cart.functions import merge_session_cart_into_db, load_db_cart_into_session
 from .forms import SignUpForm, OtpForm
 from .models import OtpCode
 from utils import otputils
-import random as rnd
-from datetime import timedelta
 
 User = get_user_model()
 
@@ -167,8 +171,15 @@ def sign_in(request):
                 pass
 
         if user is not None:
+            cart = Cart(request)
+            
             login(request, user)
-            return redirect('index')
+            
+            merge_session_cart_into_db(user, cart.cart)
+            
+            load_db_cart_into_session(request)
+            
+            return redirect('homepage')
 
         messages.error(request, "Invalid username/email or password.")
         return redirect('sign_in')
@@ -176,5 +187,6 @@ def sign_in(request):
     return render(request, 'components/sign_in.html')
 
 def sign_out(request):
+    Cart(request).clear()
     logout(request)
-    return redirect('index')
+    return redirect('homepage')

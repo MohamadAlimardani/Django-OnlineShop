@@ -27,11 +27,15 @@
       {% if product_detail.stock > 0 %}
         <form action="{% url 'cart_add' product_detail.id %}" method="POST" class="product-detail__form">
           {% csrf_token %}
-          <input type="hidden" name="current_page" value="{{ request.get_full_path }}">
-          <button class="product-detail__cta" type="submit">Add to cart</button>
+          <input type="hidden" name="redirection_page" value="{{ request.get_full_path }}">
+          <button class="product-detail__cta" type="submit">
+            <span class="wave-swap">Add to cart</span>
+          </button>
         </form>
       {% endif %}
-      <a class="product-detail__back" href="{% url 'products' %}">Back to products</a>
+      <a class="product-detail__back" href="{% url 'products' %}">
+        <span class="wave-swap">Back to products</span>
+      </a>
     </div>
   </section>
 
