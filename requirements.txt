@@ -6,7 +6,13 @@ click==8.3.1
 colorama==0.4.6
 Django==5.2.8
 django-admin-interface==0.32.0
+django-allauth==65.14.1
 django-colorfield==0.14.0
+django-extensions==4.1
+django-fastdev==1.13.0
+django-filter==25.2
+django-waffle==5.0.0
+django-widget-tweaks==1.5.1
 flake8==7.3.0
 idna==3.11
 kavenegar==1.1.2
